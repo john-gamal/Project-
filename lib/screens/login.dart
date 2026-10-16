@@ -1,8 +1,13 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
@@ -39,7 +44,10 @@ class LoginScreen extends StatelessWidget {
                 controller: emailController,
                 decoration: InputDecoration(
                   hintText: 'Email or Username',
-                  prefixIcon: const Icon(Icons.email_outlined, color: Colors.blueAccent),
+                  prefixIcon: const Icon(
+                    Icons.email_outlined,
+                    color: Colors.blueAccent,
+                  ),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
@@ -52,7 +60,10 @@ class LoginScreen extends StatelessWidget {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+                    borderSide: const BorderSide(
+                      color: Colors.blueAccent,
+                      width: 2,
+                    ),
                   ),
                 ),
               ),
@@ -62,7 +73,10 @@ class LoginScreen extends StatelessWidget {
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
-                  prefixIcon: const Icon(Icons.lock_outline, color: Colors.blueAccent),
+                  prefixIcon: const Icon(
+                    Icons.lock_outline,
+                    color: Colors.blueAccent,
+                  ),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
@@ -75,15 +89,17 @@ class LoginScreen extends StatelessWidget {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.blueAccent, width: 2),
+                    borderSide: const BorderSide(
+                      color: Colors.blueAccent,
+                      width: 2,
+                    ),
                   ),
                 ),
               ),
               const SizedBox(height: 24),
 
               ElevatedButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   foregroundColor: Colors.white,
@@ -95,10 +111,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 child: const Text(
                   'Login',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
