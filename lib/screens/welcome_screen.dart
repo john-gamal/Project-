@@ -14,7 +14,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('images/Success graphic.png', width: 270, height: 224),
             SizedBox(height: 30),
@@ -44,11 +44,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff58329A),
                     foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 19),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.circular(10),
+                      borderRadius: BorderRadiusGeometry.circular(12),
                     ),
                   ),
-                  child: Text("Back to Login"),
+                  child: Text(
+                    "Back to Login",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
