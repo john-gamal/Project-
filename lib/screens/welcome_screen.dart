@@ -36,7 +36,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 width: double.infinity,
-                height: 45,
+                height: 60,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
