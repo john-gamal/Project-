@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/screens/login.dart';
-import 'screens/welcome_screen.dart';
+import 'core/app_routes.dart';
+import 'core/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,16 +8,15 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      color: Colors.deepPurple,
-      home: const LoginScreen(),
+      title: 'Auth App',
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      initialRoute: AppRoutes.login,
+      routes: AppRoutes.routes,
     );
   }
 }
