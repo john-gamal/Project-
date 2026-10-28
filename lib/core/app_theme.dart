@@ -10,15 +10,15 @@ class AppColors {
 
 class AppTheme {
   static ThemeData get light => ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary,
-          primary: AppColors.primary,
-        ),
-        scaffoldBackgroundColor: AppColors.primary,
-        textTheme: ThemeData.light().textTheme.apply(
-              bodyColor: AppColors.text,
-              displayColor: AppColors.text,
-            ),
-      );
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: AppColors.primary,
+      primary: AppColors.primary,
+    ),
+    scaffoldBackgroundColor: AppColors.primary,
+    textTheme: ThemeData.light().textTheme.apply(
+      bodyColor: AppColors.text,
+      displayColor: AppColors.text,
+    ),
+  );
 }

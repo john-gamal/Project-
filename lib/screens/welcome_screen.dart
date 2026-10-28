@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:project/widgets/auth_header.dart';
+import 'package:project/widgets/auth_scaffold.dart';
 import '../core/app_routes.dart';
 import '../core/app_theme.dart';
 import '../widgets/app_buttons.dart';
-import '../widgets/auth_scaffold.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -10,63 +11,72 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final email =
-        (ModalRoute.of(context)?.settings.arguments as String?) ?? 'you@example.com';
+        (ModalRoute.of(context)?.settings.arguments as String?) ??
+        'you@example.com';
 
-    return AuthScaffold(
-      header: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
-        child: Center(
-          child: Column(
-            children: [
-              Container(
-                width: 60,
-                height: 60,
-                decoration: const BoxDecoration(
-                    color: Colors.white, shape: BoxShape.circle),
-                child: const Icon(Icons.check,
-                    size: 30, color: AppColors.primary),
-              ),
-              const SizedBox(height: 16),
-              const Text('You are in!',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w800)),
-              const SizedBox(height: 6),
-              Text('Signed in as $email',
-                  style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.75),
-                      fontSize: 13)),
-            ],
-          ),
+    return Scaffold(
+      body: AuthScaffold(
+        header: AuthHeader(
+          title: 'You are in !',
+          subtitle: 'Signed in as $email',
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Quick actions',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800)),
-          const SizedBox(height: 14),
-          const Row(
-            children: [
-              Expanded(child: _QuickAction(icon: Icons.person_outline, label: 'Profile')),
-              SizedBox(width: 12),
-              Expanded(child: _QuickAction(icon: Icons.settings_outlined, label: 'Settings')),
-              SizedBox(width: 12),
-              Expanded(child: _QuickAction(icon: Icons.help_outline, label: 'Help')),
-            ],
-          ),
-          const Spacer(),
-          const SizedBox(height: 24),
-          OutlineActionButton(
-            label: 'Log out',
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutes.login,
-              (route) => false,
+        child: Expanded(
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(24),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(34),
+                topRight: Radius.circular(34),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Quick actions',
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 19),
+                const Row(
+                  children: [
+                    Expanded(
+                      child: _QuickAction(
+                        icon: Icons.person_outline,
+                        label: 'Profile',
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: _QuickAction(
+                        icon: Icons.settings_outlined,
+                        label: 'Settings',
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: _QuickAction(
+                        icon: Icons.help_outline,
+                        label: 'Help',
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                const SizedBox(height: 24),
+                OutlineActionButton(
+                  label: 'Log out',
+                  onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.login,
+                    (route) => false,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -82,9 +92,7 @@ class _QuickAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(14),
-      onTap: () {
-        // TODO: navigate to the matching screen
-      },
+      onTap: () {},
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
@@ -95,9 +103,10 @@ class _QuickAction extends StatelessWidget {
           children: [
             Icon(icon, color: AppColors.primary),
             const SizedBox(height: 8),
-            Text(label,
-                style: const TextStyle(
-                    fontSize: 11, fontWeight: FontWeight.w700)),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+            ),
           ],
         ),
       ),

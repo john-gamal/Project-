@@ -31,17 +31,20 @@ class _AppTextFieldState extends State<AppTextField> {
   bool _hidden = true;
 
   OutlineInputBorder _border(Color color) => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(color: color),
-      );
+    borderRadius: BorderRadius.circular(14),
+    borderSide: BorderSide(color: color),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.label,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+        SizedBox(height: 6),
+        Text(
+          widget.label,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+        ),
         const SizedBox(height: 8),
         TextFormField(
           controller: widget.controller,
@@ -49,14 +52,16 @@ class _AppTextFieldState extends State<AppTextField> {
           keyboardType: widget.keyboardType,
           textInputAction: widget.textInputAction,
           validator: widget.validator,
-          style: const TextStyle(fontSize: 14),
+          style: const TextStyle(fontSize: 19),
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintStyle: const TextStyle(color: AppColors.muted, fontSize: 13),
+            hintStyle: const TextStyle(color: AppColors.muted, fontSize: 15),
             filled: true,
             fillColor: AppColors.fill,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 14,
+              vertical: 16,
+            ),
             prefixIcon: Icon(widget.icon, size: 20, color: AppColors.muted),
             suffixIcon: widget.isPassword
                 ? IconButton(

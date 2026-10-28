@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../core/app_theme.dart';
 
-/// Purple header on top + white rounded sheet below.
 class AuthScaffold extends StatelessWidget {
   final Widget header;
   final Widget child;
@@ -10,33 +8,22 @@ class AuthScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            header,
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-                ),
-                child: LayoutBuilder(
-                  builder: (context, c) => SingleChildScrollView(
-                    padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(minHeight: c.maxHeight - 40),
-                      child: IntrinsicHeight(child: child),
-                    ),
-                  ),
+    return SafeArea(
+      bottom: false,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [const SizedBox(height: 48), header, child],
                 ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
