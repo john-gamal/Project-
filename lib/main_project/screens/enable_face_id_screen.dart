@@ -1,0 +1,121 @@
+import 'package:flutter/material.dart';
+
+// بتظهر بعد أول تسجيل دخول
+class EnableFaceIdScreen extends StatelessWidget {
+  const EnableFaceIdScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFFEEF0F7), Color(0xFFE6DDF8), Color(0xFFDCCFF7)],
+            stops: [0.0, 0.55, 1.0],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 72,
+                          height: 72,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFDDE6FF),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.radio_button_checked,
+                            size: 30,
+                            color: Color(0xFF2563EB),
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        const Text(
+                          'Enable Face ID?',
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.w800,
+                            color: Color(0xFF0B0B14),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Sign in faster next time. Your credentials stay encrypted on this device. You can change this later in Security.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 11, color: Color(0xFF8A8A99), height: 1.5),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // Enable Face ID
+                InkWell(
+                  onTap: () {
+                    // TODO: اطلبي صلاحية الـ biometrics (local_auth) واحفظي الاختيار
+                    // TODO: روحي للـ Home
+                  },
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF07070F),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Text(
+                      'Enable Face ID',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                // Not now
+                InkWell(
+                  onTap: () {
+                    // TODO: روحي للـ Home من غير ما تفعّلي الـ Face ID
+                  },
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Text(
+                      'Not now',
+                      style: TextStyle(
+                        color: Color(0xFF0B0B14),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
