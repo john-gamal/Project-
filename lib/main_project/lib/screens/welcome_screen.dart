@@ -1,4 +1,4 @@
-import 'package:project/main_project/screens/sign_in_screen.dart';
+import 'package:project/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -33,7 +33,8 @@ class WelcomeScreen extends StatelessWidget {
                     SizedBox(width: 6),
                     Text(
                       'MediCore',
-                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                     ),
                   ],
                 ),
@@ -52,7 +53,8 @@ class WelcomeScreen extends StatelessWidget {
                 const SizedBox(height: 12),
                 const Text(
                   'Your records, verified doctors and an allergy assistant —\nin one secure place.',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF8A8A99), height: 1.4),
+                  style: TextStyle(
+                      fontSize: 12, color: Color(0xFF8A8A99), height: 1.4),
                 ),
                 const SizedBox(height: 20),
 
@@ -66,7 +68,8 @@ class WelcomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Text(
                       '✓ $t',
-                      style: const TextStyle(fontSize: 11, color: Color(0xFF33334A)),
+                      style: const TextStyle(
+                          fontSize: 11, color: Color(0xFF33334A)),
                     ),
                   ),
                 ),
@@ -122,17 +125,20 @@ class WelcomeScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "I'm a Patient",
-                                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize: 12),
                               ),
                               SizedBox(height: 2),
                               Text(
                                 'Records, visits & AI assistant',
-                                style: TextStyle(fontSize: 10, color: Color(0xFF8A8A99)),
+                                style: TextStyle(
+                                    fontSize: 10, color: Color(0xFF8A8A99)),
                               ),
                             ],
                           ),
                         ),
-                        const Icon(Icons.chevron_right, size: 16, color: Color(0xFF8A8A99)),
+                        const Icon(Icons.chevron_right,
+                            size: 16, color: Color(0xFF8A8A99)),
                       ],
                     ),
                   ),
@@ -170,7 +176,8 @@ class WelcomeScreen extends StatelessWidget {
                             color: const Color(0xFFE6DAFB),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Icon(Icons.add, size: 18, color: Color(0xFF7C3AED)),
+                          child: const Icon(Icons.add,
+                              size: 18, color: Color(0xFF7C3AED)),
                         ),
                         const SizedBox(width: 12),
                         const Expanded(
@@ -179,17 +186,20 @@ class WelcomeScreen extends StatelessWidget {
                             children: [
                               Text(
                                 "I'm a Doctor",
-                                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize: 12),
                               ),
                               SizedBox(height: 2),
                               Text(
                                 'Patients, consultations & prescriptions',
-                                style: TextStyle(fontSize: 10, color: Color(0xFF8A8A99)),
+                                style: TextStyle(
+                                    fontSize: 10, color: Color(0xFF8A8A99)),
                               ),
                             ],
                           ),
                         ),
-                        const Icon(Icons.chevron_right, size: 16, color: Color(0xFF8A8A99)),
+                        const Icon(Icons.chevron_right,
+                            size: 16, color: Color(0xFF8A8A99)),
                       ],
                     ),
                   ),
@@ -207,7 +217,8 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     child: const Text.rich(
                       TextSpan(
-                        style: TextStyle(fontSize: 12, color: Color(0xFF55556A)),
+                        style:
+                            TextStyle(fontSize: 12, color: Color(0xFF55556A)),
                         children: [
                           TextSpan(text: 'Already have an account? '),
                           TextSpan(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/core/app_routes.dart';
-
+import 'package:project/mini/core/app_routes.dart';
 import '../widgets/app_buttons.dart';
 import '../widgets/app_text_field.dart';
 

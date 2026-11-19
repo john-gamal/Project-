@@ -1,11 +1,15 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import '../../data/auth_cubit.dart';
+import 'package:file_picker/file_picker.dart';
 
 // 3 خطوات: 1) Account  2) Profile  3) Verification
 class DoctorRegistrationScreen extends StatefulWidget {
   const DoctorRegistrationScreen({super.key, required int startStep});
 
   @override
-  State<DoctorRegistrationScreen> createState() => _DoctorRegistrationScreenState();
+  State<DoctorRegistrationScreen> createState() =>
+      _DoctorRegistrationScreenState();
 }
 
 class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
@@ -50,7 +54,7 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
     }
   }
 
-  void next() {
+  Future<void> next() async {
     String? msg;
 
     if (step == 1) {
@@ -89,7 +93,20 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
     if (step < 3) {
       setState(() => step++);
     } else {
-      // TODO: ابعتي الطلب بالـ API (Submit for verification)
+      final failure = await context.read<AuthCubit>().register(
+          email: emailController.text.trim(),
+          password: passwordController.text,
+          name: nameController.text.trim(),
+          role: 'doctor',
+          specialty: specialty,
+          license: licenseController.text.trim());
+      if (!mounted) return;
+      if (failure != null) {
+        setState(() => error = failure);
+        return;
+      }
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/doctor/home', (_) => false);
     }
   }
 
@@ -140,7 +157,8 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                     ),
                     const Text(
                       'Doctor registration',
-                      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
                     ),
                   ],
                 ),
@@ -155,7 +173,9 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                         height: 3,
                         margin: EdgeInsets.only(right: i < 2 ? 6 : 0),
                         decoration: BoxDecoration(
-                          color: step >= i + 1 ? const Color(0xFF07070F) : Colors.white.withOpacity(0.8),
+                          color: step >= i + 1
+                              ? const Color(0xFF07070F)
+                              : Colors.white.withOpacity(0.8),
                           borderRadius: BorderRadius.circular(3),
                         ),
                       ),
@@ -188,7 +208,8 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
 
                         // ---------- Step 1: Account ----------
                         if (step == 1) ...[
-                          const Text('Full name', style: TextStyle(fontSize: 10, color: grey)),
+                          const Text('Full name',
+                              style: TextStyle(fontSize: 10, color: grey)),
                           const SizedBox(height: 6),
                           Container(
                             height: 44,
@@ -203,14 +224,17 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                 border: InputBorder.none,
                                 hintText: 'Dr. Sara Hassan',
                                 hintStyle: TextStyle(fontSize: 12, color: grey),
-                                prefixIcon: Icon(Icons.person_outline, size: 16, color: Color(0xFF55556A)),
-                                contentPadding: EdgeInsets.symmetric(vertical: 13),
+                                prefixIcon: Icon(Icons.person_outline,
+                                    size: 16, color: Color(0xFF55556A)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 13),
                               ),
                             ),
                           ),
                           const SizedBox(height: 12),
 
-                          const Text('Work email', style: TextStyle(fontSize: 10, color: grey)),
+                          const Text('Work email',
+                              style: TextStyle(fontSize: 10, color: grey)),
                           const SizedBox(height: 6),
                           Container(
                             height: 44,
@@ -226,14 +250,17 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                 border: InputBorder.none,
                                 hintText: 'dr.sara@clinic.com',
                                 hintStyle: TextStyle(fontSize: 12, color: grey),
-                                prefixIcon: Icon(Icons.mail_outline, size: 16, color: Color(0xFF55556A)),
-                                contentPadding: EdgeInsets.symmetric(vertical: 13),
+                                prefixIcon: Icon(Icons.mail_outline,
+                                    size: 16, color: Color(0xFF55556A)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 13),
                               ),
                             ),
                           ),
                           const SizedBox(height: 12),
 
-                          const Text('Mobile number', style: TextStyle(fontSize: 10, color: grey)),
+                          const Text('Mobile number',
+                              style: TextStyle(fontSize: 10, color: grey)),
                           const SizedBox(height: 6),
                           Container(
                             height: 44,
@@ -249,14 +276,17 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                 border: InputBorder.none,
                                 hintText: '+20 100 000 0000',
                                 hintStyle: TextStyle(fontSize: 12, color: grey),
-                                prefixIcon: Icon(Icons.phone_outlined, size: 16, color: Color(0xFF55556A)),
-                                contentPadding: EdgeInsets.symmetric(vertical: 13),
+                                prefixIcon: Icon(Icons.phone_outlined,
+                                    size: 16, color: Color(0xFF55556A)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 13),
                               ),
                             ),
                           ),
                           const SizedBox(height: 12),
 
-                          const Text('Password', style: TextStyle(fontSize: 10, color: grey)),
+                          const Text('Password',
+                              style: TextStyle(fontSize: 10, color: grey)),
                           const SizedBox(height: 6),
                           Container(
                             height: 44,
@@ -272,14 +302,17 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                 border: InputBorder.none,
                                 hintText: 'At least 8 characters',
                                 hintStyle: TextStyle(fontSize: 12, color: grey),
-                                prefixIcon: Icon(Icons.lock_outline, size: 16, color: Color(0xFF55556A)),
-                                contentPadding: EdgeInsets.symmetric(vertical: 13),
+                                prefixIcon: Icon(Icons.lock_outline,
+                                    size: 16, color: Color(0xFF55556A)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 13),
                               ),
                             ),
                           ),
                           const SizedBox(height: 12),
 
-                          const Text('Confirm password', style: TextStyle(fontSize: 10, color: grey)),
+                          const Text('Confirm password',
+                              style: TextStyle(fontSize: 10, color: grey)),
                           const SizedBox(height: 6),
                           Container(
                             height: 44,
@@ -295,8 +328,10 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                 border: InputBorder.none,
                                 hintText: 'Repeat password',
                                 hintStyle: TextStyle(fontSize: 12, color: grey),
-                                prefixIcon: Icon(Icons.lock_outline, size: 16, color: Color(0xFF55556A)),
-                                contentPadding: EdgeInsets.symmetric(vertical: 13),
+                                prefixIcon: Icon(Icons.lock_outline,
+                                    size: 16, color: Color(0xFF55556A)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 13),
                               ),
                             ),
                           ),
@@ -311,20 +346,26 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                   width: 18,
                                   height: 18,
                                   decoration: BoxDecoration(
-                                    color: agreed ? const Color(0xFF07070F) : Colors.white,
+                                    color: agreed
+                                        ? const Color(0xFF07070F)
+                                        : Colors.white,
                                     borderRadius: BorderRadius.circular(5),
                                     border: Border.all(
-                                      color: agreed ? const Color(0xFF07070F) : const Color(0xFFB5B5C3),
+                                      color: agreed
+                                          ? const Color(0xFF07070F)
+                                          : const Color(0xFFB5B5C3),
                                     ),
                                   ),
                                   child: agreed
-                                      ? const Icon(Icons.check, size: 12, color: Colors.white)
+                                      ? const Icon(Icons.check,
+                                          size: 12, color: Colors.white)
                                       : null,
                                 ),
                                 const SizedBox(width: 8),
                                 const Text(
                                   'I agree to the Terms & Privacy Policy',
-                                  style: TextStyle(fontSize: 10, color: Color(0xFF55556A)),
+                                  style: TextStyle(
+                                      fontSize: 10, color: Color(0xFF55556A)),
                                 ),
                               ],
                             ),
@@ -333,7 +374,8 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
 
                         // ---------- Step 2: Profile ----------
                         if (step == 2) ...[
-                          const Text('Specialty', style: TextStyle(fontSize: 10, color: grey)),
+                          const Text('Specialty',
+                              style: TextStyle(fontSize: 10, color: grey)),
                           const SizedBox(height: 6),
                           Container(
                             height: 44,
@@ -346,13 +388,18 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                               child: DropdownButton<String>(
                                 value: specialty,
                                 isExpanded: true,
-                                icon: const Icon(Icons.keyboard_arrow_down, size: 18),
-                                style: const TextStyle(fontSize: 12, color: Color(0xFF0B0B14)),
+                                icon: const Icon(Icons.keyboard_arrow_down,
+                                    size: 18),
+                                style: const TextStyle(
+                                    fontSize: 12, color: Color(0xFF0B0B14)),
                                 hint: const Row(
                                   children: [
-                                    Icon(Icons.medical_services_outlined, size: 16, color: Color(0xFF55556A)),
+                                    Icon(Icons.medical_services_outlined,
+                                        size: 16, color: Color(0xFF55556A)),
                                     SizedBox(width: 10),
-                                    Text('Select specialty', style: TextStyle(fontSize: 12, color: grey)),
+                                    Text('Select specialty',
+                                        style: TextStyle(
+                                            fontSize: 12, color: grey)),
                                   ],
                                 ),
                                 items: const [
@@ -362,14 +409,17 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                   'Internal Medicine',
                                   'Neurology',
                                   'Pediatrics',
-                                ].map((s) => DropdownMenuItem(value: s, child: Text(s))).toList(),
+                                ]
+                                    .map((s) => DropdownMenuItem(
+                                        value: s, child: Text(s)))
+                                    .toList(),
                                 onChanged: (v) => setState(() => specialty = v),
                               ),
                             ),
                           ),
                           const SizedBox(height: 12),
-
-                          const Text('Medical license number', style: TextStyle(fontSize: 10, color: grey)),
+                          const Text('Medical license number',
+                              style: TextStyle(fontSize: 10, color: grey)),
                           const SizedBox(height: 6),
                           Container(
                             height: 44,
@@ -384,14 +434,14 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                 border: InputBorder.none,
                                 hintText: 'EG-000000',
                                 hintStyle: TextStyle(fontSize: 12, color: grey),
-                                prefixIcon: Icon(Icons.badge_outlined, size: 16, color: Color(0xFF55556A)),
-                                contentPadding: EdgeInsets.symmetric(vertical: 13),
+                                prefixIcon: Icon(Icons.badge_outlined,
+                                    size: 16, color: Color(0xFF55556A)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 13),
                               ),
                             ),
                           ),
                         ],
-
-                        // ---------- Step 3: Verification ----------
                         if (step == 3) ...[
                           const Text.rich(
                             TextSpan(
@@ -400,14 +450,32 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                 TextSpan(text: 'License & ID  '),
                                 TextSpan(
                                   text: '* Required',
-                                  style: TextStyle(color: Color(0xFFD62839), fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                      color: Color(0xFFD62839),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
                           ),
                           const SizedBox(height: 6),
                           InkWell(
-                            onTap: () => setState(() => uploaded = !uploaded), // TODO: file_picker
+                            onTap: () async {
+                              final file = await FilePicker.pickFile(
+                                type: FileType.custom,
+                                allowedExtensions: [
+                                  'pdf',
+                                  'jpg',
+                                  'jpeg',
+                                  'png'
+                                ],
+                              );
+
+                              if (file == null) return;
+
+                              final fileName = file.name;
+                              if (file != null && mounted)
+                                setState(() => uploaded = true);
+                            },
                             borderRadius: BorderRadius.circular(14),
                             child: Container(
                               padding: const EdgeInsets.all(14),
@@ -426,28 +494,42 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                                     width: 36,
                                     height: 36,
                                     decoration: BoxDecoration(
-                                      color: uploaded ? const Color(0xFFD9F2E6) : const Color(0xFFEDE5FB),
+                                      color: uploaded
+                                          ? const Color(0xFFD9F2E6)
+                                          : const Color(0xFFEDE5FB),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Icon(
-                                      uploaded ? Icons.check : Icons.upload_outlined,
+                                      uploaded
+                                          ? Icons.check
+                                          : Icons.upload_outlined,
                                       size: 18,
-                                      color: uploaded ? const Color(0xFF16A34A) : const Color(0xFF7C3AED),
+                                      color: uploaded
+                                          ? const Color(0xFF16A34A)
+                                          : const Color(0xFF7C3AED),
                                     ),
                                   ),
                                   const SizedBox(width: 12),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          uploaded ? 'license_and_id.pdf' : 'Upload license & ID',
-                                          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 11),
+                                          uploaded
+                                              ? 'license_and_id.pdf'
+                                              : 'Upload license & ID',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 11),
                                         ),
                                         const SizedBox(height: 2),
                                         Text(
-                                          uploaded ? 'Tap to remove' : 'PDF or JPG, up to 10 MB',
-                                          style: const TextStyle(fontSize: 9, color: grey),
+                                          uploaded
+                                              ? 'Tap to remove'
+                                              : 'PDF or JPG, up to 10 MB',
+                                          style: const TextStyle(
+                                              fontSize: 9, color: grey),
                                         ),
                                       ],
                                     ),
@@ -466,7 +548,8 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                 if (error != null) ...[
                   Text(
                     error!,
-                    style: const TextStyle(fontSize: 10, color: Color(0xFFD62839)),
+                    style:
+                        const TextStyle(fontSize: 10, color: Color(0xFFD62839)),
                   ),
                   const SizedBox(height: 8),
                 ],
@@ -479,7 +562,9 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                     height: 48,
                     padding: const EdgeInsets.only(left: 22, right: 8),
                     decoration: BoxDecoration(
-                      color: step == 3 ? const Color(0xFF1B2554) : const Color(0xFF07070F),
+                      color: step == 3
+                          ? const Color(0xFF1B2554)
+                          : const Color(0xFF07070F),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Row(
@@ -501,7 +586,8 @@ class _DoctorRegistrationScreenState extends State<DoctorRegistrationScreen> {
                             color: Colors.white,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.arrow_forward, size: 15, color: Color(0xFF0B0B14)),
+                          child: const Icon(Icons.arrow_forward,
+                              size: 15, color: Color(0xFF0B0B14)),
                         ),
                       ],
                     ),

@@ -1,9 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'doctor_registration_screen.dart';
 import 'enable_face_id_screen.dart';
 import 'forgot_password_screen.dart';
 import 'sign_in_screen.dart';
+import '../../data/auth_cubit.dart';
 
 class DoctorSignInScreen extends StatefulWidget {
   const DoctorSignInScreen({super.key});
@@ -24,19 +26,11 @@ class _DoctorSignInScreenState extends State<DoctorSignInScreen> {
     super.dispose();
   }
 
-  void signIn() {
-    // TODO: اربطي هنا بالـ API الحقيقي (والتأكد إن حساب الدكتور اتفعّل)
-    final ok =
-        emailController.text.trim().isNotEmpty &&
-        passwordController.text == 'correct';
-    if (ok) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const EnableFaceIdScreen()),
-      );
-      return;
-    }
-    setState(() => error = 'Wrong email or password.');
+  Future<void> signIn() async {
+    final ok=await context.read<AuthCubit>().signIn(emailController.text.trim(),passwordController.text,'doctor');
+    if(!mounted)return;
+    if(ok){Navigator.of(context).pushNamedAndRemoveUntil('/doctor/home',(_)=>false);return;}
+    setState(()=>error='Wrong doctor email/password or account not registered as doctor.');
   }
 
   @override

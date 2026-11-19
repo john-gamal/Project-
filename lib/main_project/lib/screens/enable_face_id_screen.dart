@@ -1,4 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import '../../features/patient/patient_screens.dart';
+import '../../data/auth_cubit.dart';
 
 // بتظهر بعد أول تسجيل دخول
 class EnableFaceIdScreen extends StatelessWidget {
@@ -63,10 +66,7 @@ class EnableFaceIdScreen extends StatelessWidget {
 
                 // Enable Face ID
                 InkWell(
-                  onTap: () {
-                    // TODO: اطلبي صلاحية الـ biometrics (local_auth) واحفظي الاختيار
-                    // TODO: روحي للـ Home
-                  },
+                  onTap: () async {final ok=await context.read<AuthCubit>().enableBiometrics();if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(ok?'Biometric unlock enabled':'Biometrics unavailable or cancelled')));Navigator.of(context).pushNamedAndRemoveUntil(context.read<AuthCubit>().role=='doctor'?'/doctor/home':'/patient/home',(_)=>false);}},
                   borderRadius: BorderRadius.circular(30),
                   child: Container(
                     height: 48,
@@ -90,7 +90,7 @@ class EnableFaceIdScreen extends StatelessWidget {
                 // Not now
                 InkWell(
                   onTap: () {
-                    // TODO: روحي للـ Home من غير ما تفعّلي الـ Face ID
+                    Navigator.of(context).pushNamedAndRemoveUntil(context.read<AuthCubit>().role=='doctor'?'/doctor/home':'/patient/home',(_)=>false);
                   },
                   borderRadius: BorderRadius.circular(30),
                   child: Container(

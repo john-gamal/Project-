@@ -1,5 +1,8 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'sign_in_screen.dart';
+import 'doctor_sign_in_screen.dart';
+import '../../data/auth_cubit.dart';
 
 // شاشة قفل: من غير زرار رجوع
 class QuickUnlockScreen extends StatefulWidget {
@@ -13,14 +16,11 @@ class _QuickUnlockScreenState extends State<QuickUnlockScreen> {
   bool useFace = true; // Face ID / Fingerprint
   bool failed = false; // حالة الفشل (Try again)
 
-  void authenticate() {
-    // TODO: استخدمي package local_auth هنا وحطي النتيجة في success
-    const success = false;
-
-    setState(() => failed = !success);
-    if (success) {
-      // TODO: روحي للـ Home
-    }
+  Future<void> authenticate() async {
+    final success=await context.read<AuthCubit>().authenticateBiometric();
+    if(!mounted)return;
+    setState(()=>failed=!success);
+    if(success)Navigator.of(context).pushNamedAndRemoveUntil(context.read<AuthCubit>().role=='doctor'?'/doctor/home':'/patient/home',(_)=>false);
   }
 
   @override
@@ -203,7 +203,7 @@ class _QuickUnlockScreenState extends State<QuickUnlockScreen> {
                             child: GestureDetector(
                               onTap: () => Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (_) => const SignInScreen()),
+                                MaterialPageRoute(builder: (_) => context.read<AuthCubit>().role=='doctor'?const DoctorSignInScreen():const SignInScreen()),
                               ),
                               child: const Text(
                                 'Use password instead',

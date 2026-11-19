@@ -1,6 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'create_account_screen.dart';
 import 'forgot_password_screen.dart';
+import '../../features/patient/patient_screens.dart';
+import '../../data/auth_cubit.dart';
+import 'doctor_sign_in_screen.dart';
+import 'quick_unlock_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   final bool isPatient;
@@ -17,7 +22,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   int attemptsLeft = 3;
   bool showError = false;
-  bool biometricEnabled = true; // الأيقونات تظهر لو متفعلة
+  bool biometricEnabled = true;
 
   @override
   void dispose() {
@@ -26,17 +31,20 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  void toggleRole() => setState(() => isPatient = !isPatient);
+  void toggleRole(){Navigator.pushReplacement(context,MaterialPageRoute(builder:(_)=>const DoctorSignInScreen()));}
 
-  void signIn() {
-    // TODO: اربطي هنا بالـ API الحقيقي
-    final ok = emailController.text.trim().isNotEmpty &&
-        passwordController.text == 'correct';
-    if (ok) return;
-    setState(() {
-      attemptsLeft = (attemptsLeft - 1).clamp(0, 3);
-      showError = true;
-    });
+  Future<void> signIn() async {
+    final ok=await context.read<AuthCubit>().signIn(emailController.text.trim(),passwordController.text,'patient');
+    if(!mounted)return;
+    if(ok){Navigator.of(context).pushNamedAndRemoveUntil('/patient/home',(_)=>false);return;}
+    setState((){attemptsLeft=(attemptsLeft-1).clamp(0,3);showError=true;});
+  }
+  Future<void> biometricSignIn() async {
+    if(context.read<AuthCubit>().email==null){if(mounted)ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text('Sign in with your password first, then enable biometrics in Profile')));return;}
+    if(await context.read<AuthCubit>().biometricEnabled && await context.read<AuthCubit>().authenticateBiometric()){
+      if(!mounted)return;
+      if(context.read<AuthCubit>().role=='doctor'){Navigator.of(context).pushNamedAndRemoveUntil('/doctor/home',(_)=>false);}else{Navigator.of(context).pushNamedAndRemoveUntil('/patient/home',(_)=>false);}
+    }else if(mounted){ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text('Biometric unlock is not enabled or was cancelled')));}
   }
 
   @override
@@ -282,7 +290,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   (icon) => Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 6),
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: biometricSignIn,
                                       customBorder: const CircleBorder(),
                                       child: Container(
                                         width: 44,

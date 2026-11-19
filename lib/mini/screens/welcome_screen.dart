@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project/widgets/auth_header.dart';
-import 'package:project/widgets/auth_scaffold.dart';
+import 'package:project/mini/widgets/auth_header.dart';
+import 'package:project/mini/widgets/auth_scaffold.dart';
 import '../core/app_routes.dart';
 import '../core/app_theme.dart';
 import '../widgets/app_buttons.dart';
